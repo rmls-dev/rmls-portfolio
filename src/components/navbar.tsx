@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { name: "Work", href: "#work" },
@@ -20,13 +19,12 @@ export default function Navbar() {
         <a
           href="/"
           className="text-xl font-bold tracking-tight text-black"
-          aria-label="RMLS Home"
         >
           RMLS
         </a>
 
         {/* Desktop Navigation */}
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="desktop-nav items-center gap-8">
           {navLinks.map((link) => (
             <a
               key={link.name}
@@ -49,24 +47,40 @@ export default function Navbar() {
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="rounded-md p-2 text-black transition-colors hover:bg-gray-100 md:hidden"
+          className="mobile-menu-button flex flex-col gap-1.5 rounded-md p-2"
           aria-label={isOpen ? "Close menu" : "Open menu"}
           aria-expanded={isOpen}
         >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+          <span
+            className={`block h-0.5 w-6 bg-black transition-transform ${
+              isOpen ? "translate-y-2 rotate-45" : ""
+            }`}
+          />
+
+          <span
+            className={`block h-0.5 w-6 bg-black transition-opacity ${
+              isOpen ? "opacity-0" : ""
+            }`}
+          />
+
+          <span
+            className={`block h-0.5 w-6 bg-black transition-transform ${
+              isOpen ? "-translate-y-2 -rotate-45" : ""
+            }`}
+          />
         </button>
       </nav>
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="border-t border-black/10 bg-white md:hidden">
+        <div className="mobile-nav border-t border-black/10 bg-white">
           <div className="mx-auto flex max-w-7xl flex-col px-6 py-5">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="border-b border-black/10 py-4 text-base font-medium text-gray-800 transition-colors hover:text-black"
+                className="border-b border-black/10 py-4 text-base font-medium text-gray-800"
               >
                 {link.name}
               </a>
